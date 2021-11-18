@@ -13,6 +13,14 @@ Plugin implementation to add datastore segments on a [Newrelic](https://newrelic
 
 ## How to use
 
+### Install
+
+```
+go get -u github.com/rafaelhl/gorm-newrelic-telemetry-plugin
+```
+
+### Quick Start
+
 Since this plugin implements the interface [Plugin](https://gorm.io/docs/write_plugins.html#Plugin),
 just follow the example below available on test file [newrelic_test.go](telemetry/newrelic_test.go):
 
