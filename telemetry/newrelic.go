@@ -1,6 +1,5 @@
 package telemetry
 
-
 import (
 	"fmt"
 	"strconv"
@@ -18,7 +17,7 @@ const (
 
 type (
 	config struct {
-		name string
+		name    string
 		address string
 		product newrelic.DatastoreProduct
 	}
@@ -30,7 +29,7 @@ type (
 func NewNrTracer(databaseName, databaseAddress, product string) NrTracer {
 	return NrTracer{
 		cfg: config{
-			name: databaseName,
+			name:    databaseName,
 			address: databaseAddress,
 			product: newrelic.DatastoreProduct(product),
 		},
@@ -136,6 +135,9 @@ var after = func(operation string, cfg config) func(*gorm.DB) {
 	return func(db *gorm.DB) {
 		if segment := createSegment(db, operation, cfg); segment != nil {
 			segment.End()
+		}
+		if transaction := newrelic.FromContext(db.Statement.Context); transaction != nil {
+			transaction.End()
 		}
 	}
 }
